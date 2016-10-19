@@ -7,37 +7,25 @@ int Card[7];
 int CardOpen[] = { 0,0,0,0,0,0,0 };
 int NewOpened = 0;
 
+int ShuffleCheck(int* CardBox){
+	for (int first = 0; first < 7; first++) {
+		for (int second = first	+	1; second < 7; second++) {
+			if (CardBox[first]==CardBox[second]) {
+				return 1;
+			}
+		}
+	}
+	return 0;
+}
+
 void CardShuffle(void)
 {
 	init_genrand((unsigned)time(NULL));
-	while (Card[0] == 0)
-	{
-		Card[0] = (genrand_int32() % 8);
-	}
-	while ((Card[0] == Card[1]) || (Card[1] == 0))
-	{
-		Card[1] = (genrand_int32() % 8);
-	}
-	while ((Card[2] == Card[1]) || (Card[2] == Card[0]) || (Card[2] == 0))
-	{
-		Card[2] = (genrand_int32() % 8);
-	}
-	while ((Card[3] == Card[2]) || (Card[3] == Card[1]) || (Card[3] == Card[0]) || (Card[3] == 0))
-	{
-		Card[3] = (genrand_int32() % 8);
-	}
-	while ((Card[4] == Card[3]) || (Card[4] == Card[2]) || (Card[4] == Card[1]) || (Card[4] == Card[0]) || (Card[4] == 0))
-	{
-		Card[4] = (genrand_int32() % 8);
-	}
-	while ((Card[5] == Card[4]) || (Card[5] == Card[3]) || (Card[5] == Card[2]) || (Card[5] == Card[1]) || (Card[5] == Card[0]) || (Card[5] == 0))
-	{
-		Card[5] = (genrand_int32() % 8);
-	}
-	while ((Card[6] == Card[5]) || (Card[6] == Card[4]) || (Card[6] == Card[3]) || (Card[6] == Card[2]) || (Card[6] == Card[1]) || (Card[6] == Card[0]) || (Card[6] == 0))
-	{
-		Card[6] = (genrand_int32() % 8);
-	}
+	do {
+		for (int i = 0; i < 7; i++) {
+			Card[i] = (genrand_int32() % 7)	+	1;
+		}
+	} while(ShuffleCheck(Card));
 }
 
 void CardShow(void)
