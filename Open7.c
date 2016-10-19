@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include "MT.h"
 
 int Card[7];
 int CardOpen[] = { 0,0,0,0,0,0,0 };
@@ -8,34 +9,34 @@ int NewOpened = 0;
 
 void CardShuffle(void)
 {
-	srand((unsigned)time(NULL));
+	init_genrand((unsigned)time(NULL));
 	while (Card[0] == 0)
 	{
-		Card[0] = (rand() % 8);
+		Card[0] = (genrand_int32() % 8);
 	}
 	while ((Card[0] == Card[1]) || (Card[1] == 0))
 	{
-		Card[1] = (rand() % 8);
+		Card[1] = (genrand_int32() % 8);
 	}
 	while ((Card[2] == Card[1]) || (Card[2] == Card[0]) || (Card[2] == 0))
 	{
-		Card[2] = (rand() % 8);
+		Card[2] = (genrand_int32() % 8);
 	}
 	while ((Card[3] == Card[2]) || (Card[3] == Card[1]) || (Card[3] == Card[0]) || (Card[3] == 0))
 	{
-		Card[3] = (rand() % 8);
+		Card[3] = (genrand_int32() % 8);
 	}
 	while ((Card[4] == Card[3]) || (Card[4] == Card[2]) || (Card[4] == Card[1]) || (Card[4] == Card[0]) || (Card[4] == 0))
 	{
-		Card[4] = (rand() % 8);
+		Card[4] = (genrand_int32() % 8);
 	}
 	while ((Card[5] == Card[4]) || (Card[5] == Card[3]) || (Card[5] == Card[2]) || (Card[5] == Card[1]) || (Card[5] == Card[0]) || (Card[5] == 0))
 	{
-		Card[5] = (rand() % 8);
+		Card[5] = (genrand_int32() % 8);
 	}
 	while ((Card[6] == Card[5]) || (Card[6] == Card[4]) || (Card[6] == Card[3]) || (Card[6] == Card[2]) || (Card[6] == Card[1]) || (Card[6] == Card[0]) || (Card[6] == 0))
 	{
-		Card[6] = (rand() % 8);
+		Card[6] = (genrand_int32() % 8);
 	}
 }
 
