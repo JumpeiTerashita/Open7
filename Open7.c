@@ -1,3 +1,5 @@
+#define FALSE 0
+#define TRUE 1
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -11,11 +13,11 @@ int ShuffleCheck(int* CardBox){
 	for (int first = 0; first < 7; first++) {
 		for (int second = first	+	1; second < 7; second++) {
 			if (CardBox[first]==CardBox[second]) {
-				return 1;
+				return TRUE;
 			}
 		}
 	}
-	return 0;
+	return FALSE;
 }
 
 void CardShuffle(void)
@@ -30,40 +32,32 @@ void CardShuffle(void)
 
 void CardShow(void)
 {
-	if (CardOpen[0] == 1) printf("[%d]", Card[0]); else printf("[*]");
-	if (CardOpen[1] == 1) printf("[%d]", Card[1]); else printf("[*]");
-	if (CardOpen[2] == 1) printf("[%d]", Card[2]); else printf("[*]");
-	if (CardOpen[3] == 1) printf("[%d]", Card[3]); else printf("[*]");
-	if (CardOpen[4] == 1) printf("[%d]", Card[4]); else printf("[*]");
-	if (CardOpen[5] == 1) printf("[%d]", Card[5]); else printf("[*]");
-	if (CardOpen[6] == 1) printf("[%d]", Card[6]); else printf("[*]");
+	for (int i = 0; i < 7; i++) {
+		if (CardOpen[i] == TRUE) printf("[%d]", Card[i]); else printf("[*]");
+	}
 }
 
 void CardChoice(void)
 {
 	int CardPlace = 0;
 	scanf("%d", &CardPlace);
-	if (CardPlace == 1) { CardOpen[0] = 1; NewOpened = 1; }
-	if (CardPlace == 2) { CardOpen[1] = 1; NewOpened = 2; }
-	if (CardPlace == 3) { CardOpen[2] = 1; NewOpened = 3; }
-	if (CardPlace == 4) { CardOpen[3] = 1; NewOpened = 4; }
-	if (CardPlace == 5) { CardOpen[4] = 1; NewOpened = 5; }
-	if (CardPlace == 6) { CardOpen[5] = 1; NewOpened = 6; }
-	if (CardPlace == 7) { CardOpen[6] = 1; NewOpened = 7; }
+	CardOpen[CardPlace-1] = TRUE;
+	NewOpened = CardPlace-1;
 	if (CardPlace > 7 || CardPlace < 0) printf("ERROR!");
+	return;
+}
+
+int CardIsFullOpen(void)
+{
+	for (int i = 0; i < 6; i++) {
+		if(CardOpen[i]!= 1) return FALSE;
+	}
+	return TRUE;
 }
 
 void CardEffect(void)
 {
-	if (
-		(CardOpen[0] == 1)
-		&& (CardOpen[1] == 1)
-		&& (CardOpen[2] == 1)
-		&& (CardOpen[3] == 1)
-		&& (CardOpen[4] == 1)
-		&& (CardOpen[5] == 1)
-		&& (CardOpen[6] == 1)
-		)
+	if (CardIsFullOpen())
 	{
 		CardShow();
 		printf("\nすべてのカードをオープンしました！\nあなたの勝利です！\n");
